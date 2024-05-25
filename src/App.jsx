@@ -1,4 +1,4 @@
-import { useReducer } from 'react'
+import { useImmerReducer } from 'use-immer'
 import TaskReducer from '../Reducer/taskReducer'
 import AddTask from '../components/AddTask'
 import TaskList from '../components/TaskList'
@@ -6,10 +6,13 @@ import { initialTasks } from '../data/data'
 import './App.css'
 
 function App() {
-  const [tasks, dispatch] = useReducer(TaskReducer,initialTasks);
+  const [tasks, dispatch] = useImmerReducer(TaskReducer,initialTasks);
   //function to get the next Id
   const getNextId = ()=>{
-    const nextId = tasks[tasks.length-1].id + 1;
+    let nextId=0;
+    if(tasks.length === 0)
+      return nextId;
+    nextId = tasks[tasks.length-1].id + 1;
     return nextId;
   }
   //handlers
