@@ -13,7 +13,7 @@ Reducers are a different way to handle state. You can migrate from useState to u
 Your event handlers currently specify what to do by setting state:
 
 ````javascript
-function handleAddTask(text) {
+ function handleAddTask(text) {
   setTask([
     ...tasks,
     {
@@ -26,7 +26,8 @@ function handleAddTask(text) {
 
 ## New state logic wth dispatch():
 
-``` function handleAddtask(text){
+``` javascript
+function handleAddtask(text){
 dispatch({
 type: "AddTask",
 text: text,
@@ -49,7 +50,8 @@ id
 
 ## Step 2: Wriitng a reducer function
 
-```export default function TaskReducer(tasks, action){
+``` javascript
+export default function TaskReducer(tasks, action){
 switch(action.type){
 case "AddTask":{
 return [
@@ -70,4 +72,5 @@ done: false
 
 Taskreducer is the function, and initialTask is the array of task.
 tasks is the output, dipatch is what we use in the handlers.
+
 ````
