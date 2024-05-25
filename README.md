@@ -12,42 +12,26 @@ Reducers are a different way to handle state. You can migrate from useState to u
 
 Your event handlers currently specify what to do by setting state:
 
-`function handleAddTask(text) {
-setTask([
-...tasks,
-{
-id: getNextId(),
-text: text,
-done: false
-}
-])
-}
-
-function handleChangeTask(task) {
-let newTask = tasks.map(t=>{
-if(t.id === task.id)
-return task;
-else
-return t;
-})
-setTask(newTask);
-}
-
-function handleDeleteTask(taskId) {
-let newTask = tasks.filter(t=>t.id!==id);
-setTask(newTask);
-}`
+````javascript
+function handleAddTask(text) {
+  setTask([
+    ...tasks,
+    {
+      id: getNextId(),
+      text: text,
+      done: false
+    }
+  ]);
+} ```
 
 ## New state logic wth dispatch():
 
-` function handleAddtask(text){
+``` function handleAddtask(text){
 dispatch({
 type: "AddTask",
 text: text,
 id: getNextId(),
-
-    })
-
+})
 }
 function handleChangetask(task){
 dispatch({
@@ -61,12 +45,11 @@ dispatch({
 type:"deleteTask",
 id
 })
-
-} `
+} ```
 
 ## Step 2: Wriitng a reducer function
 
-`export default function TaskReducer(tasks, action){
+```export default function TaskReducer(tasks, action){
 switch(action.type){
 case "AddTask":{
 return [
@@ -79,7 +62,7 @@ done: false
 ]
 
         }
-    }}`
+    }}```
 
 ## Step 3: useReducer from the main app.
 
@@ -87,3 +70,4 @@ done: false
 
 Taskreducer is the function, and initialTask is the array of task.
 tasks is the output, dipatch is what we use in the handlers.
+````
