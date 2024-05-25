@@ -1,8 +1,89 @@
-# React + Vite
+# USE of useReducer to reduce complexity
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+As your components grow in complexity, it can get harder to see at a glance all the different ways in which a component’s state gets updated. For example, the TaskApp component below holds an array of tasks in state and uses three different event handlers to add, remove, and edit tasks:
 
-Currently, two official plugins are available:
+Reducers are a different way to handle state. You can migrate from useState to useReducer in three steps:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+    Move from setting state to dispatching actions.
+    Write a reducer function.
+    Use the reducer from your component.
+
+## Step 1: Move from setting state to dispatching actions
+
+Your event handlers currently specify what to do by setting state:
+
+`function handleAddTask(text) {
+setTask([
+...tasks,
+{
+id: getNextId(),
+text: text,
+done: false
+}
+])
+}
+
+function handleChangeTask(task) {
+let newTask = tasks.map(t=>{
+if(t.id === task.id)
+return task;
+else
+return t;
+})
+setTask(newTask);
+}
+
+function handleDeleteTask(taskId) {
+let newTask = tasks.filter(t=>t.id!==id);
+setTask(newTask);
+}`
+
+## New state logic wth dispatch():
+
+` function handleAddtask(text){
+dispatch({
+type: "AddTask",
+text: text,
+id: getNextId(),
+
+    })
+
+}
+function handleChangetask(task){
+dispatch({
+type:"changeTask",
+task
+})
+
+}
+function handleDeleteTask(id){
+dispatch({
+type:"deleteTask",
+id
+})
+
+} `
+
+## Step 2: Wriitng a reducer function
+
+`export default function TaskReducer(tasks, action){
+switch(action.type){
+case "AddTask":{
+return [
+...tasks,
+{
+id: action.id,
+text: action.text,
+done: false
+}
+]
+
+        }
+    }}`
+
+## Step 3: useReducer from the main app.
+
+`const [tasks, dispatch] = useReducer(TaskReducer,initialTasks);`
+
+Taskreducer is the function, and initialTask is the array of task.
+tasks is the output, dipatch is what we use in the handlers.
